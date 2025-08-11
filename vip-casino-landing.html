@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>VIP Casino — One‑File Landing</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            vip1: '#7c3aed', // purple
+            vip2: '#ec4899', // pink
+            dark: '#0b0b12',
+            midnight: '#121327',
+            gold: '#f8d049',
+          },
+          boxShadow: {
+            glow: '0 0 0 2px rgba(255,255,255,0.06), 0 0 40px rgba(124,58,237,0.35)',
+          },
+        },
+      },
+    };
+  </script>
+  <style>
+    html, body { background: #0b0b12; color: #e5e7eb; }
+    .glass { backdrop-filter: blur(10px); background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.03)); border: 1px solid rgba(255,255,255,0.08); }
+    .ring-progress { transform: rotate(-90deg); transform-origin: 50% 50%; }
+  </style>
+</head>
+<body class="antialiased selection:bg-vip1/30 selection:text-white">
+  <!-- VIP Banner -->
+  <header class="relative overflow-hidden">
+    <div class="absolute inset-0 bg-gradient-to-br from-vip1 via-fuchsia-600 to-vip2 opacity-80"></div>
+    <div class="absolute -top-24 -left-24 w-[36rem] h-[36rem] rounded-full bg-white/10 blur-3xl"></div>
+    <div class="absolute -bottom-24 -right-24 w-[32rem] h-[32rem] rounded-full bg-black/20 blur-3xl"></div>
+    <nav class="relative z-10 max-w-7xl mx-auto px-6 py-5 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <div class="w-9 h-9 rounded-xl bg-white/10 grid place-content-center shadow-glow"><span class="text-gold text-xl">★</span></div>
+        <h1 class="text-white text-xl md:text-2xl font-semibold tracking-wide">AURORA VIP</h1>
+      </div>
+      <div class="hidden md:flex items-center gap-6 text-sm text-white/90">
+        <a href="#kpi" class="hover:text-white">Dashboard</a>
+        <a href="#leaderboard" class="hover:text-white">Leaderboard</a>
+        <a href="#rewards" class="hover:text-white">Rewards</a>
+        <a href="#about" class="hover:text-white">About</a>
+      </div>
+      <button class="md:hidden text-white/90" aria-label="menu">☰</button>
+    </nav>
+
+    <section class="relative z-10 max-w-7xl mx-auto px-6 pb-20 pt-10 md:pt-16">
+      <div class="grid md:grid-cols-2 gap-10 items-center">
+        <div>
+          <p class="text-white/80 uppercase text-xs tracking-[0.3em]">Elite Program</p>
+          <h2 class="text-4xl md:text-6xl font-extrabold text-white leading-tight mt-3">VIP Casino Experience</h2>
+          <p class="text-white/85 mt-5 max-w-xl">Enjoy priority support, tailored rewards, and real‑time insights. Your journey to Platinum starts now.</p>
+          <div class="mt-8 flex flex-wrap gap-3">
+            <a href="#rewards" class="px-5 py-3 rounded-xl bg-white text-midnight font-semibold hover:translate-y-[-1px] transition">Claim Rewards</a>
+            <a href="#leaderboard" class="px-5 py-3 rounded-xl bg-transparent border border-white/40 text-white hover:bg-white/10 transition">View Leaderboard</a>
+          </div>
+          <div class="mt-6 flex items-center gap-4 text-white/80 text-sm">
+            <span class="inline-flex items-center gap-2"><span class="text-gold">◆</span> Secure & Fair</span>
+            <span class="inline-flex items-center gap-2"><span class="text-gold">◆</span> 24/7 VIP Host</span>
+          </div>
+        </div>
+        <div class="glass rounded-2xl p-6 md:p-8 border-white/10">
+          <div class="grid grid-cols-2 gap-4">
+            <article class="rounded-xl p-4 bg-black/30 border border-white/10">
+              <p class="text-xs text-white/60">Total Users Only</p>
+              <p id="stat-users" class="text-3xl font-bold mt-1">–</p>
+            </article>
+            <article class="rounded-xl p-4 bg-black/30 border border-white/10">
+              <p class="text-xs text-white/60">Active Players</p>
+              <p id="stat-active" class="text-3xl font-bold mt-1">–</p>
+            </article>
+            <article class="rounded-xl p-4 bg-black/30 border border-white/10">
+              <p class="text-xs text-white/60">Turnover</p>
+              <p id="stat-turnover" class="text-3xl font-bold mt-1">–</p>
+            </article>
+            <article class="rounded-xl p-4 bg-black/30 border border-white/10">
+              <p class="text-xs text-white/60">Win Amount</p>
+              <p id="stat-win" class="text-3xl font-bold mt-1">–</p>
+            </article>
+          </div>
+          <p class="text-xs text-white/50 mt-3">Auto‑refreshed every 5s • Demo data</p>
+        </div>
+      </div>
+    </section>
+  </header>
+
+  <!-- KPI strip -->
+  <section id="kpi" class="max-w-7xl mx-auto px-6 -mt-10 md:-mt-16 relative z-20">
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+      <div class="glass rounded-xl p-4">
+        <p class="text-xs text-white/60">Avg Win Rate</p>
+        <p id="kpi-winrate" class="text-2xl font-bold">–</p>
+      </div>
+      <div class="glass rounded-xl p-4">
+        <p class="text-xs text-white/60">Top Level</p>
+        <p id="kpi-level" class="text-2xl font-bold">–</p>
+      </div>
+      <div class="glass rounded-xl p-4">
+        <p class="text-xs text-white/60">Rewards Claimed</p>
+        <p id="kpi-claimed" class="text-2xl font-bold">–</p>
+      </div>
+      <div class="glass rounded-xl p-4">
+        <p class="text-xs text-white/60">Avg Session (min)</p>
+        <p id="kpi-session" class="text-2xl font-bold">–</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Level Dashboard with Animated Rings -->
+  <section class="max-w-7xl mx-auto px-6 mt-14">
+    <div class="grid md:grid-cols-3 gap-6">
+      <div class="glass rounded-2xl p-6">
+        <h3 class="text-white font-semibold mb-5">Level Dashboard</h3>
+        <div class="grid grid-cols-3 gap-6">
+          <!-- Ring component -->
+          <div class="text-center">
+            <svg width="88" height="88" viewBox="0 0 100 100" class="mx-auto ring-progress">
+              <circle cx="50" cy="50" r="40" stroke="#1f2937" stroke-width="12" fill="none" />
+              <circle id="ring1" cx="50" cy="50" r="40" stroke="#f8d049" stroke-width="12" stroke-linecap="round" fill="none" stroke-dasharray="251.2" stroke-dashoffset="251.2" />
+            </svg>
+            <p class="mt-2 text-sm text-white/70">Gold • L12</p>
+          </div>
+          <div class="text-center">
+            <svg width="88" height="88" viewBox="0 0 100 100" class="mx-auto ring-progress">
+              <circle cx="50" cy="50" r="40" stroke="#1f2937" stroke-width="12" fill="none" />
+              <circle id="ring2" cx="50" cy="50" r="40" stroke="#a78bfa" stroke-width="12" stroke-linecap="round" fill="none" stroke-dasharray="251.2" stroke-dashoffset="251.2" />
+            </svg>
+            <p class="mt-2 text-sm text-white/70">Platinum • L18</p>
+          </div>
+          <div class="text-center">
+            <svg width="88" height="88" viewBox="0 0 100 100" class="mx-auto ring-progress">
+              <circle cx="50" cy="50" r="40" stroke="#1f2937" stroke-width="12" fill="none" />
+              <circle id="ring3" cx="50" cy="50" r="40" stroke="#60a5fa" stroke-width="12" stroke-linecap="round" fill="none" stroke-dasharray="251.2" stroke-dashoffset="251.2" />
+            </svg>
+            <p class="mt-2 text-sm text-white/70">Diamond • L24</p>
+          </div>
+        </div>
+        <p class="text-xs text-white/50 mt-4">Progress animates on load.</p>
+      </div>
+
+      <!-- Reward Points UI -->
+      <div id="rewards" class="glass rounded-2xl p-6">
+        <h3 class="text-white font-semibold mb-3">Reward Points</h3>
+        <div class="h-3 w-full bg-white/10 rounded-full overflow-hidden">
+          <div id="points-bar" class="h-3 bg-gradient-to-r from-vip1 to-vip2 rounded-full" style="width: 40%"></div>
+        </div>
+        <p class="mt-2 text-sm text-white/70"><span id="points">4,000</span> / 10,000 pts</p>
+        <div class="mt-4 flex gap-3">
+          <button id="btn-claim" class="px-4 py-2 rounded-lg bg-white text-midnight font-medium">Claim</button>
+          <button id="btn-boost" class="px-4 py-2 rounded-lg border border-white/30 text-white">Boost ×2</button>
+        </div>
+        <p id="reward-msg" class="text-xs text-emerald-300 mt-2 hidden">Reward claimed!</p>
+      </div>
+
+      <!-- Awards -->
+      <div class="glass rounded-2xl p-6">
+        <h3 class="text-white font-semibold mb-5">Awards</h3>
+        <ul class="space-y-3">
+          <li class="flex items-center gap-3"><span class="text-gold">🏆</span> Startup Excellence 2024</li>
+          <li class="flex items-center gap-3"><span class="text-gold">🏆</span> Gaming Award • Fair Play</li>
+          <li class="flex items-center gap-3"><span class="text-gold">🏆</span> Player's Choice • Service</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Live Leaderboard -->
+  <section id="leaderboard" class="max-w-7xl mx-auto px-6 mt-16">
+    <div class="glass rounded-2xl p-6">
+      <div class="flex items-center justify-between mb-4">
+        <h3 class="text-white font-semibold">Live Leaderboard</h3>
+        <span class="text-xs text-white/60">Auto‑updates • Demo</span>
+      </div>
+      <div class="overflow-x-auto">
+        <table class="min-w-full text-sm">
+          <thead class="text-white/70">
+            <tr class="border-b border-white/10">
+              <th class="text-left py-2 pr-4">Player</th>
+              <th class="text-right py-2 pr-4">Turnover</th>
+              <th class="text-right py-2 pr-4">Win rate %</th>
+              <th class="text-right py-2">Win amount</th>
+            </tr>
+          </thead>
+          <tbody id="lb" class="divide-y divide-white/5"></tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- About + Timeline -->
+  <section id="about" class="max-w-7xl mx-auto px-6 mt-16 grid md:grid-cols-2 gap-10">
+    <div class="glass rounded-2xl p-6">
+      <h3 class="text-white font-semibold mb-3">About Us</h3>
+      <p class="text-white/80 leading-relaxed">We design with <strong>Empathy</strong> and <strong>Essentialism</strong>—every pixel has a purpose. Our layouts guide action, our motion adds delight, and consistency builds trust. Novel yet familiar, we craft engaging experiences that keep players coming back.</p>
+      <ul class="mt-4 space-y-2 text-white/70 text-sm">
+        <li>• 24/7 VIP concierge & localized hosts</li>
+        <li>• Bank‑grade security, audited RNG</li>
+        <li>• Mobile‑first, lightning‑fast UI</li>
+      </ul>
+    </div>
+    <div class="glass rounded-2xl p-6">
+      <h3 class="text-white font-semibold mb-3">Milestones</h3>
+      <ol class="relative border-l border-white/10 pl-4 space-y-6">
+        <li>
+          <div class="absolute -left-2 top-0 w-3 h-3 rounded-full bg-gold"></div>
+          <p class="text-white/80 font-medium">2023 — Platform Beta</p>
+          <p class="text-white/60 text-sm">Core launch with secure wallet and fair play audits.</p>
+        </li>
+        <li>
+          <div class="absolute -left-2 w-3 h-3 rounded-full bg-vip1"></div>
+          <p class="text-white/80 font-medium">2024 — VIP Program</p>
+          <p class="text-white/60 text-sm">Personal hosts, seasonal events, rewards marketplace.</p>
+        </li>
+        <li>
+          <div class="absolute -left-2 w-3 h-3 rounded-full bg-vip2"></div>
+          <p class="text-white/80 font-medium">2025 — Global Expansion</p>
+          <p class="text-white/60 text-sm">Localized experiences and next‑gen real‑time analytics.</p>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- Footer with trust badges -->
+  <footer class="mt-16">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="glass rounded-2xl p-6 grid md:grid-cols-4 gap-6 items-center">
+        <div>
+          <p class="text-sm text-white/60">Rewards</p>
+          <div class="flex gap-2 mt-2">
+            <span class="px-3 py-1 rounded-lg bg-white/10">Cashback</span>
+            <span class="px-3 py-1 rounded-lg bg-white/10">Rebate</span>
+            <span class="px-3 py-1 rounded-lg bg-white/10">Drops</span>
+          </div>
+        </div>
+        <div class="md:col-span-3 flex flex-wrap gap-3 items-center">
+          <span class="text-white/60">Trust:</span>
+          <span class="px-3 py-1 rounded-lg bg-white/10">SSL</span>
+          <span class="px-3 py-1 rounded-lg bg-white/10">RNG Audited</span>
+          <span class="px-3 py-1 rounded-lg bg-white/10">24/7 Support</span>
+          <span class="px-3 py-1 rounded-lg bg-white/10">Fair Play</span>
+        </div>
+      </div>
+      <p class="text-center text-white/40 text-xs mt-6">© 2025 Aurora VIP. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script>
+    // --- Demo data + real-time updates ---
+    const fmtMoney = n => n.toLocaleString(undefined, { style: 'currency', currency: 'USD', maximumFractionDigits: 0 });
+    const fmtNum = n => n.toLocaleString();
+
+    function randomInt(min, max){ return Math.floor(Math.random()*(max-min+1))+min; }
+
+    const stats = {
+      users: 128420,
+      active: 3214,
+      turnover: 2450000,
+      win: 1120000,
+    };
+
+    function renderStats(){
+      document.getElementById('stat-users').textContent = fmtNum(stats.users);
+      document.getElementById('stat-active').textContent = fmtNum(stats.active);
+      document.getElementById('stat-turnover').textContent = fmtMoney(stats.turnover);
+      document.getElementById('stat-win').textContent = fmtMoney(stats.win);
+    }
+
+    function tick(){
+      stats.users += randomInt(1,6);
+      stats.active += randomInt(-5,8);
+      stats.turnover += randomInt(2000, 12000);
+      stats.win += randomInt(500, 6000);
+      renderStats();
+
+      // KPIs
+      document.getElementById('kpi-winrate').textContent = (55 + Math.random()*10).toFixed(1) + '%';
+      document.getElementById('kpi-level').textContent = 'Diamond L' + randomInt(20,26);
+      document.getElementById('kpi-claimed').textContent = fmtNum(randomInt(2000, 12000));
+      document.getElementById('kpi-session').textContent = randomInt(8, 24);
+
+      // Leaderboard refresh
+      updateLeaderboard();
+    }
+
+    // Leaderboard
+    const players = Array.from({length: 12}).map((_,i)=>({
+      name: 'Player ' + (i+1),
+      turnover: randomInt(20000, 240000),
+      winRate: (40 + Math.random()*40),
+      winAmt: randomInt(-40000, 120000),
+    }));
+
+    function updateLeaderboard(){
+      // evolve data
+      players.forEach(p=>{
+        p.turnover += randomInt(-2000, 9000);
+        p.winAmt += randomInt(-4000, 8000);
+        p.winRate = Math.min(95, Math.max(5, p.winRate + (Math.random()-0.5)*4));
+      });
+      // sort by turnover desc
+      players.sort((a,b)=>b.turnover-a.turnover);
+      const rows = players.map(p=>`
+        <tr>
+          <td class="py-2 pr-4">${p.name}</td>
+          <td class="py-2 pr-4 text-right">${fmtMoney(Math.max(0,p.turnover))}</td>
+          <td class="py-2 pr-4 text-right">${p.winRate.toFixed(1)}%</td>
+          <td class="py-2 text-right ${p.winAmt>=0?'text-emerald-300':'text-rose-300'}">${fmtMoney(p.winAmt)}</td>
+        </tr>`).join('');
+      document.getElementById('lb').innerHTML = rows;
+    }
+
+    // Animated ring progress
+    function animateRing(el, pct){
+      const C = 2*Math.PI*40; // r=40
+      const target = C*(1-pct);
+      let cur = C;
+      const step = ()=>{
+        cur += (target-cur)*0.08;
+        el.setAttribute('stroke-dashoffset', cur);
+        if (Math.abs(cur-target) > 0.5) requestAnimationFrame(step);
+      };
+      requestAnimationFrame(step);
+    }
+
+    // Rewards actions
+    const pointsEl = document.getElementById('points');
+    const barEl = document.getElementById('points-bar');
+    document.getElementById('btn-claim').addEventListener('click', ()=>{
+      document.getElementById('reward-msg').classList.remove('hidden');
+      setTimeout(()=>document.getElementById('reward-msg').classList.add('hidden'), 2000);
+    });
+    document.getElementById('btn-boost').addEventListener('click', ()=>{
+      let pts = parseInt(pointsEl.textContent.replace(/,/g,''), 10);
+      pts = Math.min(10000, Math.round(pts*1.25));
+      pointsEl.textContent = fmtNum(pts);
+      barEl.style.width = (pts/10000*100) + '%';
+    });
+
+    // init
+    renderStats();
+    updateLeaderboard();
+    setInterval(tick, 5000);
+    animateRing(document.getElementById('ring1'), 0.72);
+    animateRing(document.getElementById('ring2'), 0.56);
+    animateRing(document.getElementById('ring3'), 0.31);
+  </script>
+</body>
+</html>
